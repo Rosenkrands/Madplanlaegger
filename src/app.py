@@ -86,13 +86,18 @@ app.layout = html.Div(
     Input(component_id="recipes-dropdown", component_property="value"),
 )
 def update_grocery_list(input_value):
-    table_header = [html.Thead(html.Tr([html.Th("Ingrediens"), html.Th("Antal")]))]
+    table_header = [
+        html.Thead(
+            html.Tr([html.Th("Kategori"), html.Th("Ingrediens"), html.Th("Antal")])
+        )
+    ]
     if input_value is not None:
         grocieries1 = (
             db["Forbrug"][db["Forbrug"]["RetID"].isin(input_value)]
-            .groupby(["Ingrediens", "Enhed"])["Antal"]
+            .groupby(["Ingrediens", "Enhed", "Kategori"])["Antal"]
             .sum()
             .reset_index(drop=False)
+            .sort_values(by=["Kategori"])
         )
         print(grocieries1)
 
@@ -101,6 +106,7 @@ def update_grocery_list(input_value):
             rows.append(
                 html.Tr(
                     [
+                        html.Td(grocieries1.loc[i, "Kategori"]),
                         html.Td(grocieries1.loc[i, "Ingrediens"]),
                         html.Td(
                             str(grocieries1.loc[i, "Antal"])
