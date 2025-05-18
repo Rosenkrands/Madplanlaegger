@@ -7,8 +7,8 @@ else
 fi
 
 echo "Stopping and removing the old container..."
-docker stop madplanlaegger
-docker rm madplanlaegger
+docker stop madplanlaegger || true
+docker rm madplanlaegger || true
 
 echo "Running the new container..."
 if docker run -d --name madplanlaegger -p 8050:8050 madplanlaegger:latest; then
