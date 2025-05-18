@@ -42,6 +42,11 @@ groceries = dbc.Card(
                 html.P(
                     "Den generede indkøbsliste kan ses herunder.", className="card-text"
                 ),
+                dcc.Clipboard(
+                    id="clipboard",
+                    target_id="groceries-table",
+                    style={"margin-bottom": "10px"},
+                ),
                 dbc.Table(
                     id="groceries-table",
                     children=[
@@ -60,14 +65,19 @@ app.layout = html.Div(
         dbc.Col(
             html.H1(
                 "Madplanlægger",
-                style={"text-align": "center", "padding-top": 20, "padding-bottom": 20},
+                style={
+                    "text-align": "center",
+                    "padding-top": 20,
+                    "padding-bottom": 20,
+                },
             ),
             width={"size": 12},
         ),
         dbc.Container(
             [dbc.Row([recipes], style={"padding-bottom": 20}), dbc.Row([groceries])]
         ),
-    ]
+    ],
+    style={"padding-left": 20, "padding-right": 20, "padding-top": 20},
 )
 
 
@@ -105,4 +115,4 @@ def update_grocery_list(input_value):
 
 
 if __name__ == "__main__":
-    app.run(debug=False, host="0.0.0.0")
+    app.run(debug=True, host="0.0.0.0")
