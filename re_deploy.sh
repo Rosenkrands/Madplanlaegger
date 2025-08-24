@@ -11,7 +11,7 @@ docker stop madplanlaegger || true
 docker rm madplanlaegger || true
 
 echo "Running the new container..."
-if docker run -d --name madplanlaegger -p 8050:8050 madplanlaegger:latest; then
+if docker run --restart always -d --name madplanlaegger -p 8050:8050 madplanlaegger:latest; then
     echo "New container is running."
 else
     echo "Failed to run the new container."
